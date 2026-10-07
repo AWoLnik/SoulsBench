@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+runs/
+jev_api_key.txt
+*_api_key.txt
+*_account_id.txt
+obs_password.txt
+
+# local notes, not part of the project
+setup.txt

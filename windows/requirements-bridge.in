@@ -1,0 +1,12 @@
+# Windows bridge dependencies. Compile with (from WSL or Windows):
+#   uv pip compile windows/requirements-bridge.in --python-platform x86_64-pc-windows-msvc \
+#       --python-version 3.12 -o windows/requirements-bridge.txt
+# SoulsGym is pinned to an exact commit (v1.2.0, the release that targets DS3 1.15.2 with the Rust
+# speedhack and abi3 wheels). PyPI only has 1.1.0, whose capture module is built for CPython 3.11 only.
+soulsgym @ https://github.com/amacati/SoulsGym/archive/29c94d89ac8a47846c619019296d0ba55c6e80d5.zip
+pydantic>=2.7,<3
+httpx>=0.27,<1
+# SoulsGym was developed against OpenCV 4 (cv2.resize only); do not jump a major version blindly.
+opencv-python>=4,<5
+# OBS WebSocket v5 client: the bridge starts/stops recordings per episode (optional at runtime).
+obsws-python>=1.8,<2

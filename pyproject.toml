@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "soulsbench"
+version = "0.1.0"
+description = "SoulsBench: a realtime Dark Souls III combat benchmark for decision models, on the live game via SoulsGym"
+readme = "README.md"
+requires-python = ">=3.11.2"
+license = { file = "LICENSE" }
+dependencies = [
+    "pydantic>=2.7,<3",
+    "httpx>=0.27,<1",
+]
+
+[project.optional-dependencies]
+# The Windows bridge pins its full dependency set in windows/requirements-bridge.txt.
+# This extra exists so `pip install soulsbench[bridge]` also works on a Windows box.
+bridge = [
+    "soulsgym @ https://github.com/amacati/SoulsGym/archive/29c94d89ac8a47846c619019296d0ba55c6e80d5.zip ; sys_platform == 'win32'",
+]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+soulsbench-run = "soulsbench.run:main"
+soulsbench-report = "soulsbench.report:main"
+soulsbench-bench = "soulsbench.bench:main"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["soulsbench"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "soulsgym: needs the soulsgym package importable (logic tests against a mocked game, no DS3 needed)",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501", "B027"]
